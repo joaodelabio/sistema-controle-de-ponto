@@ -11,15 +11,27 @@
         <p id="dia-semana"></p>
         <p id="data-atual"></p>
         <p id="hora-atual"></p>       
-        <button id="btn-registro">Registrar ponto</button>    
+        <button id="btn-registrar-ponto">Registrar ponto</button>    
     </div>
 
     <dialog id="dialog-ponto">
         <p id="dialog-data">Data:</p>
         <p id="dialog-hora">Hora:</p>
-        <button id="entrada-dialog">Entrada</button>
+        <select name="register-type" id="register-type">
+            <option value="entrada">Entrada</option>
+            <option value="intervalo">Intervalo</option>
+            <option value="volta-intervalo">Volta intervalo</option>
+            <option value="saida">Saída</option>
+        </select>
+        <button id="btn-dialog-register">Registrar</button>
+
+        <!--
+        <button>Intervalo</button>
+        <button>Volta intervalo</button>
         <button id="saida-dialog">Saída</button>
-        <button id="fechar-dialog">X</button>
+        -->
+        
+        <button id="dialog-fechar">X</button>
     </dialog>
 
     <script src="js/script.js"></script>

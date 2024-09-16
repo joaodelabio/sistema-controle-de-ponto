@@ -8,7 +8,7 @@
     border: 0;
 }
 
-#fechar-dialog{
+#dialog-fechar{
     background-color: lightgray;
     position: absolute;
     top:0;
@@ -16,7 +16,7 @@
     border: 0;
 }
 
-#fechar-dialog:hover{
+#dialog-fechar:hover{
     text-decoration: underline;
-    background: palevioletred;
+    background: rgb(238, 68, 68);
 }

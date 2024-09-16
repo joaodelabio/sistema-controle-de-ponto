@@ -2,9 +2,9 @@ const date = new Date();
 const diaSemana = document.getElementById("dia-semana");
 const dataAtual = document.getElementById("data-atual");
 const horaAtual = document.getElementById("hora-atual");
-const btnRegistrar = document.getElementById("btn-registro");
+const btnRegistrarPonto = document.getElementById("btn-registrar-ponto");
 
-btnRegistrar.addEventListener("click", register);
+btnRegistrarPonto.addEventListener("click", register);
 
 diaSemana.textContent = getWeekDay();
 dataAtual.textContent = getCurrentDate();
@@ -17,15 +17,36 @@ dialogData.textContent = getCurrentDate();
 const dialogHora = document.getElementById("dialog-hora");
 dialogHora.textContent = getCurrentTime();
 
-const dialogEntrada = document.getElementById("entrada-dialog");
-dialogEntrada.addEventListener("click", () => {
-    saveRegisterLocalStorage(JSON.stringify(getObjectRegister("entrada")));
-});
+const selectRegisterType = document.getElementById("register-type");
 
-const dialogSaida = document.getElementById("saida-dialog");
-dialogSaida.addEventListener("click", () => {
-    saveRegisterLocalStorage(JSON.stringify(getObjectRegister("saida")));
-})
+function setRegisterType() {
+    let lastType = localStorage.getItem("lastRegisterType");
+    if(lastType == "entrada") {
+        selectRegisterType.value = "intervalo";
+        return;
+    }
+    if(lastType == "intervalo") {
+
+    }
+    if(lastType == "volta-intervalo") {
+
+    }
+    if(lastType == "saida") {
+
+    }
+    
+}
+
+const btnDialogRegister = document.getElementById("btn-dialog-register");
+btnDialogRegister.addEventListener("click", () => {
+
+    let register = getObjectRegister(selectRegisterType.value);
+    saveRegisterLocalStorage(register);
+
+    localStorage.setItem("lastRegisterType", selectRegisterType.value);
+
+    dialogPonto.close();
+});
 
 function getObjectRegister(registerType) {
 
@@ -39,19 +60,30 @@ function getObjectRegister(registerType) {
     return ponto;
 }
 
-const fecharDialog = document.getElementById("fechar-dialog");
+const fecharDialog = document.getElementById("dialog-fechar");
 fecharDialog.addEventListener("click", () => {
     dialogPonto.close();
 })
 
-// salvar e recuperar um array de objetos ao inves de um objeto
+const registersLocalStorage = getRegisterLocalStorage("register");
 
 function saveRegisterLocalStorage(register) {
-    localStorage.setItem("register", register);
+
+    registersLocalStorage.push(register);
+
+    localStorage.setItem("register", JSON.stringify(registersLocalStorage));
 }
 
 function getRegisterLocalStorage(key) {
-    // prox aula
+    
+    let registers = localStorage.getItem(key);
+
+    if(!registers) {
+        return [];
+    }
+
+    return JSON.parse(registers);
+
 }
 
 function register() {
