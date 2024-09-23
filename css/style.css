@@ -1,22 +1,95 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    background-image: url('/KKKK.png');
+    background-size: 12%;
+    background-position: center;
+}
+
 .data-hora {
+    display: flex;
     text-align: center;
     flex-direction: column;
     justify-content: center;
+    color: white;
+}
+
+#dia-semana {
+    font-size: 150%;
+    margin: 15px
+}
+
+.data-hora button {
+    margin: 25px;
+    cursor: pointer;
+}
+
+.data-hora button:active {
+    transform: translateY(2px);
 }
 
 #dialog-ponto{
+    border-color: rgb(167, 167, 167);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 41.7%;
+    margin-top: 20%;
+    padding: 40px;
+}
+
+#dialog-data{
+    position: absolute;
+    top: 30px;
+    left: 35%;
+}
+
+#dialog-hora {
+    position: absolute;
+    top: 55px;
+    left: 38.4%;
+    margin-top: 10px;
+}
+
+select {
+    margin-top: 50%;
+    left: 30%
+}
+
+button#btn-dialog-register {
+    margin-top: 10px;
     border: 0;
+    border-radius: 5px;
+    padding: 5px;
+    color: aliceblue;
+    background: rgb(91, 156, 255);
+}
+
+#btn-dialog-register:hover {
+    background: rgb(33, 117, 245);
+    cursor: pointer;
 }
 
 #dialog-fechar{
-    background-color: lightgray;
+    background-color: rgb(238, 238, 238);
     position: absolute;
-    top:0;
-    right:0;
+    font-size: 15px;
+    top: 5px;
+    right: 5px;
     border: 0;
+    padding: 5px;
+    width: 30px;
+    border-radius: 50%;
 }
 
 #dialog-fechar:hover{
-    text-decoration: underline;
+    cursor: pointer;
     background: rgb(238, 68, 68);
 }
