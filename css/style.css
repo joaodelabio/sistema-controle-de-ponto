@@ -8,8 +8,8 @@ body {
     justify-content: center;
     align-items: center;
     height: 50vh;
-    background-image: url('/KKKK.png');
-    background-size: 12%;
+    background-image: url('/bonaro.jpg');
+    background-size: 15%;
     background-position: center;
 }
 
@@ -92,4 +92,24 @@ button#btn-dialog-register {
 #dialog-fechar:hover{
     cursor: pointer;
     background: rgb(238, 68, 68);
+}
+
+#alerta-ponto-registrado {
+    border: 1px solid blue;
+    display: flex;
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+    color: white;
+    font-size: 2em;
+    background: black;
+    transition: opacity 0.5s ease;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+.show {
+    opacity: 1;
 }

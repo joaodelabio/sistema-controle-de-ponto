@@ -12,12 +12,15 @@ dataAtual.textContent = getCurrentDate();
 const dialogPonto = document.getElementById("dialog-ponto");
 
 const dialogData = document.getElementById("dialog-data");
-dialogData.textContent = getCurrentDate();
+dialogData.textContent = "Data: " + getCurrentDate();
 
 const dialogHora = document.getElementById("dialog-hora");
-dialogHora.textContent = getCurrentTime();
+
+//dialogHora.textContent = getCurrentTime();
 
 const selectRegisterType = document.getElementById("register-type");
+
+// finalizar a função
 
 function setRegisterType() {
     let lastType = localStorage.getItem("lastRegisterType");
@@ -34,26 +37,38 @@ function setRegisterType() {
     if(lastType == "saida") {
 
     }
-    
 }
 
 const btnDialogRegister = document.getElementById("btn-dialog-register");
-btnDialogRegister.addEventListener("click", () => {
+btnDialogRegister.addEventListener("click", async () => {
 
-    let register = getObjectRegister(selectRegisterType.value);
+    let register = await getObjectRegister(selectRegisterType.value);
     saveRegisterLocalStorage(register);
 
-    localStorage.setItem("lastRegisterType", selectRegisterType.value);
+    localStorage.setItem("lastRegister", JSON.stringify(register));
+
+    const alertaSucesso = document.getElementById("alerta-ponto-registrado");
+    alertaSucesso.classList.remove("hidden");
+    alertaSucesso.classList.add("show");
+
+    setInterval(() => {
+        alertaSucesso.classList.remove("show");
+        alertaSucesso.classList.add("hidden");
+    }, 5000);
 
     dialogPonto.close();
 });
 
-function getObjectRegister(registerType) {
+async function getObjectRegister(registerType) {
+
+    const location = await getUserLocation();
+
+    console.log(location);
 
     ponto = {
         "date": getCurrentDate(),
         "time": getCurrentTime(),
-        "location": getUserLocation(),
+        "location": location,
         "id": 1,
         "type": registerType
     }
@@ -83,10 +98,53 @@ function getRegisterLocalStorage(key) {
     }
 
     return JSON.parse(registers);
+}
 
+/*function getUserLocation() {
+    navigator.geolocation.getCurrentPosition((position) => {
+        let userLocation = {
+            "lat":position.coords.latitude,
+            "long": position.coords.longitude
+        }
+        return userLocation;
+    });    
+}*/
+
+function getUserLocation() {
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            let userLocation = {
+                "latitude": position.coords.latitude,
+                "longitude": position.coords.longitude
+            }
+            resolve(userLocation);
+        }, 
+        (error) => {
+            reject("Erro " + error);
+        });
+    });
 }
 
 function register() {
+
+    const dialogUltimoRegistro = document.getElementById("dialog-ultimo-registro");
+    let lastRegister = JSON.parse(localStorage.getItem("lastRegister"));
+
+    if (lastRegister) {
+        let lastDateRegister = lastRegister.date;
+        let lastTimeRegister = lastRegister.time;
+        let lastRegisterType = lastRegister.type;
+
+        dialogUltimoRegistro.textContent = "Ultimo registro: " + lastDateRegister + " | " + lastTimeRegister + " | " + lastRegisterType;
+    }
+    dialogHora.textContent = "Hora: " + getCurrentTime();
+
+    let interval = setInterval(() => {
+        dialogHora.textContent = "Hora: " + getCurrentTime();
+    }, 1000);
+
+    console.log(interval);
+
     dialogPonto.showModal();
 }
 
@@ -107,19 +165,6 @@ function getCurrentDate() {
 function getWeekDay() {
     const weekday = ["Domingo-feira", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sabado-feira"];
     return weekday[date.getDay()];
-}
-
-let locationUser = {};
-
-function getUserLocation() {
-    navigator.geolocation.getCurrentPosition((position) => {
-        let userLocation = {
-            "lat":position.coords.latitude,
-            "long": position.coords.longitude
-        }
-        locationUser = userLocation;
-        console.log(locationUser);
-    });    
 }
 
 updateContentHour();
